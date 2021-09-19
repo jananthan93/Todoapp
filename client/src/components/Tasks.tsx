@@ -5,8 +5,9 @@ import { RootState } from "../redux/store"
 import TaskService from "../redux/taskService"
 import { ADD_TASK, FETCH_TASKS } from "../redux/actionTypes"
 import ModalTask from "./ModalTask"
-import { ADD, DELETE, EDIT, STATUS_CHANGE } from "../redux/utils"
+import { ADD, convert, DELETE, EDIT, STATUS_CHANGE } from "../redux/utils"
 import ConfirmModal from "./ConfirmModal"
+
 export default function Tasks() {
     const dispatch = useDispatch()
     const [show, setShow] = useState<boolean>(false)
@@ -116,7 +117,7 @@ export default function Tasks() {
                        {tasks.map(task=>( <tr>
                         <td>{task.title}</td>
                         <td>{task.activeState} {task.activeState==='Todo'&&<Button className="mx-1 btn-primary" onClick={()=>{toggleModal({title:'Task active state updation',action:STATUS_CHANGE,refObj:task}); setVisibleConfirm(true)}}>Chage to Done</Button>}</td>
-                        <td>{task.endDate}</td>
+                        <td>{convert(task.endDate)}</td>
                         <td><Button className="mx-1" onClick={()=>{toggleModal({title:'Edit Task',action:EDIT,refObj:task});setShow(true)}}>Edit</Button>
                          <Button className="mx-1 btn-danger" onClick={()=>{toggleModal({title:'Delete Task',action:DELETE,refObj:task}); setVisibleConfirm(true)}}>Delete</Button></td>
                         </tr>))}

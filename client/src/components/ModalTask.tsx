@@ -1,6 +1,6 @@
-import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from 'react'
+import React, { FC, ReactElement, useEffect, useState } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import { EDIT } from '../redux/utils';
+import { convert, EDIT } from '../redux/utils';
 
 const ModalTask:FC<{ show:boolean,state:any,handleClose: any,handleOnClick:any }>  =({ show,state,handleClose,handleOnClick }): ReactElement => {  
     const activeStates =["Todo","Done"]
@@ -45,7 +45,7 @@ const ModalTask:FC<{ show:boolean,state:any,handleClose: any,handleOnClick:any }
             End date
             </Form.Label>
             <Col sm="10">
-            <Form.Control  type="date" name="endDate" onChange={handleOnchange} value={task.endDate}/>
+            <Form.Control  type="date" name="endDate" onChange={handleOnchange} value={convert(task.endDate)}/>
             </Col>
         </Form.Group>
         {state.action===EDIT&&<Form.Group  className="mb-3" controlId="formPlaintextEmail">
