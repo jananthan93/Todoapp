@@ -24,8 +24,27 @@ const reducer = (
           break;
         case actionTypes.FETCH_TASKS: 
         if(action.tasks != null){
-            console.log(action.tasks)
             return { ...state, tasks: action.tasks}
+          }
+          break;
+      case actionTypes.UPDATE_TASK:    
+      if(action.task !=null && action.task !==undefined){
+          const updateTask: Task = action.task
+            return {
+                ...state, 
+                tasks:state.tasks.map(task =>(
+                          task._id===updateTask._id ? updateTask:task
+                        )) ,
+            }
+        }
+        break;
+        case actionTypes.DELETE_TASK:    
+        if(action.task !=null && action.task !==undefined){
+          const deleteTask: Task = action.task
+              return {
+                  ...state, 
+                  tasks:state.tasks.filter(task =>task._id!==deleteTask._id) ,
+              }
           }
           break;
     }

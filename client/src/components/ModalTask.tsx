@@ -56,7 +56,7 @@ const ModalTask:FC<{ show:boolean,state:any,handleClose: any,handleOnClick:any }
             <option>select status</option>
             {
                 activeStates.map(status=>(
-                    <option value={status}>{status}</option>
+                    <option value={status} key={status}>{status}</option>
                 ))
             }
         </Form.Select>

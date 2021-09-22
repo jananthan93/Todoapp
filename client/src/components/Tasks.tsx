@@ -3,7 +3,7 @@ import { Col, Row, Table,Container, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import TaskService from "../redux/taskService"
-import { FETCH_TASKS } from "../redux/actionTypes"
+import { ADD_TASK, DELETE_TASK, FETCH_TASKS, UPDATE_TASK } from "../redux/actionTypes"
 import ModalTask from "./ModalTask"
 import { ADD, convert, DELETE, EDIT, STATUS_CHANGE } from "../redux/utils"
 import ConfirmModal from "./ConfirmModal"
@@ -43,23 +43,38 @@ export default function Tasks() {
     }
     const createTask =(taskObj:Task)=>{
         TaskService.create(taskObj).then(response=>{
-            getAllTasks()
+            const data =response.data as AxiosResponseData
+            dispatch({
+                type:ADD_TASK,
+                tasks:null,
+                task:data.results
+            })
             handleClose()
         })
         .catch(error=>console.log(error))
     }
     const updateTask =(taskObj:Task)=>{
         TaskService.update(taskObj._id,taskObj).then(response=>{
-            getAllTasks()
+            const data =response.data as AxiosResponseData
+            dispatch({
+                type:UPDATE_TASK,
+                tasks:null,
+                task:data.results
+            })
             handleClose()
         })
         .catch(error=>console.log(error))
     }
     const deleteTask=(id:string)=>{
         TaskService.remove(id).then(response=>{
-            getAllTasks()
-            handleConfirmModalClose()
-        })
+            const data =response.data as AxiosResponseData
+                dispatch({
+                    type:DELETE_TASK,
+                    tasks:null,
+                    task:data.results
+                })
+                handleConfirmModalClose()
+            })
         .catch(error=>console.log(error))
     }
     const changeStatus=(id:string,status:string)=>{
@@ -114,7 +129,7 @@ export default function Tasks() {
                         </tr>
                     </thead>
                     <tbody>
-                       {tasks.map(task=>( <tr>
+                       {tasks.map(task=>( <tr key={task._id}>
                         <td>{task.title}</td>
                         <td>{task.activeState} {task.activeState==='Todo'&&<Button className="mx-1 btn-primary" onClick={()=>{toggleModal({title:'Task active state updation',action:STATUS_CHANGE,refObj:task}); setVisibleConfirm(true)}}>Chage to Done</Button>}</td>
                         <td>{convert(task.endDate)}</td>

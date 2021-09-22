@@ -11,7 +11,7 @@ exports.createTask = (req,res) => {
         if(err){
            console.log("error")
         }else{
-             res.status(200).json({taskNew,message:'task Sucessfully created'}); 
+             res.status(200).json({results:taskNew,message:'task Sucessfully created'}); 
         }
     })
 }
@@ -39,14 +39,14 @@ exports.updateTaskById=(req, res) => {
             }); 
         }else{
             res.status(200).json({
-                task,
+                results:task,
                 message: 'Course updated Successfully'
               });
         }
     })
 }
 exports.deleteTaskById=(req, res) => {
-    Task.findOneAndDelete({_id:req.params.taskId},(err)=>{
+    Task.findOneAndDelete({_id:req.params.taskId},(err,deletedTask)=>{
         if(err){
             console.log('Delete error', err);
             return res.status(400).json({
@@ -54,6 +54,7 @@ exports.deleteTaskById=(req, res) => {
             }); 
         }else{
             res.status(200).json({
+                results:deletedTask,
                 message: 'Course deleted Successfully'
               });
         }
