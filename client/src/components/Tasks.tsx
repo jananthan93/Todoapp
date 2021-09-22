@@ -3,7 +3,7 @@ import { Col, Row, Table,Container, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../redux/store"
 import TaskService from "../redux/taskService"
-import { ADD_TASK, FETCH_TASKS } from "../redux/actionTypes"
+import { FETCH_TASKS } from "../redux/actionTypes"
 import ModalTask from "./ModalTask"
 import { ADD, convert, DELETE, EDIT, STATUS_CHANGE } from "../redux/utils"
 import ConfirmModal from "./ConfirmModal"
@@ -81,11 +81,11 @@ export default function Tasks() {
         .catch(error=>console.log(error))
     }
     const handleOnClick=(taskObj:Task)=>{
-        if(state.action == ADD){
+        if(state.action === ADD){
             createTask(taskObj)
-        }else if(state.action == EDIT){
+        }else if(state.action === EDIT){
             updateTask(taskObj)
-        }else if(state.action == DELETE){
+        }else if(state.action === DELETE){
             deleteTask(taskObj._id)
         }else{
             changeStatus(taskObj._id,'Done')
@@ -93,9 +93,9 @@ export default function Tasks() {
     }
     useEffect(()=>{
         getAllTasks()
-    },[dispatch])
+    },[])
 
-    const tasks = useSelector<RootState, Task[]>((state) => state.taskReducer.tasks);
+    const tasks = useSelector<RootState, Task[]>((storeState) => storeState.taskReducer.tasks);
     return (
         <>
         <ConfirmModal state={state} handleClose={handleConfirmModalClose} show={visibleConfirm} handleOnClick={handleOnClick}/>

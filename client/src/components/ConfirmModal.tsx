@@ -1,15 +1,8 @@
-import React, { ChangeEvent, FC, ReactElement, useEffect, useState } from 'react'
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
-import { DELETE, EDIT } from '../redux/utils';
+import React, { FC, ReactElement} from 'react'
+import { Button, Modal } from 'react-bootstrap';
+import { DELETE } from '../redux/utils';
 
 const ConfirmModal:FC<{ show:boolean,state:any,handleClose: any,handleOnClick:any }>  =({ show,state,handleClose,handleOnClick }): ReactElement => {  
-    
-    useEffect(()=>{
-        if(state.action===DELETE&&state.refObj!=undefined){
-            console.log(state.refObj)
-        }else{
-        }
-    },[state,show])
 
     return (
       <>
@@ -18,7 +11,7 @@ const ConfirmModal:FC<{ show:boolean,state:any,handleClose: any,handleOnClick:an
             <Modal.Title>{state.title}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {state.action==DELETE?'Do you Confirm Delete?':'Did you Change status to Done?'}
+            {state.action===DELETE?'Do you Confirm Delete?':'Did you Change status to Done?'}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>

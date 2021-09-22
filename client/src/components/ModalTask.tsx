@@ -1,5 +1,5 @@
 import React, { FC, ReactElement, useEffect, useState } from 'react'
-import { Button, Col, Form, Modal, Row } from 'react-bootstrap';
+import { Button, Col, Form, Modal } from 'react-bootstrap';
 import { convert, EDIT } from '../redux/utils';
 
 const ModalTask:FC<{ show:boolean,state:any,handleClose: any,handleOnClick:any }>  =({ show,state,handleClose,handleOnClick }): ReactElement => {  
@@ -17,7 +17,7 @@ const ModalTask:FC<{ show:boolean,state:any,handleClose: any,handleOnClick:any }
         })
     }
     useEffect(()=>{
-        if(state.action===EDIT&&state.refObj!=undefined){
+        if(state.action===EDIT&&state.refObj!==undefined){
             console.log(state.refObj)
             setTask(state.refObj)
         }else{
